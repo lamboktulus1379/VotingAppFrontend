@@ -59,7 +59,11 @@ export class VotingListComponent implements OnInit, AfterViewInit {
   }
 
   customeSort = (event : any) => {
-    console.log(event);
+    if (event.active == "categories") {
+      this.dataSource.sort = this.sort;
+      return;
+    }
+    
     
     this.order = `${event.active} ${event.direction}`;
     this.getAllCategories();
@@ -97,6 +101,5 @@ export class VotingListComponent implements OnInit, AfterViewInit {
   }
   public pageChanged = (event: any) => {
     console.log(event);
-    
   }
 }

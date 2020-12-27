@@ -6,10 +6,11 @@ import {MaterialModule} from './../material/material.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { VotingCreateComponent } from './voting-create/voting-create.component';
 
 
 @NgModule({
-  declarations: [VotingListComponent],
+  declarations: [VotingListComponent, VotingCreateComponent],
   imports: [
     CommonModule,
     VotingRoutingModule,
