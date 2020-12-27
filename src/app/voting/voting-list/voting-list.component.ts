@@ -38,7 +38,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.getAllCategories();
+    this.getVotings();
 
     this.dialogConfig = {
       height: '200px',
@@ -48,7 +48,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public getAllCategories = () => {
+  public getVotings = () => {
     this.repoService.getData(`api/votings?orderBy=${this.order}`)
     .subscribe(res => {
       this.dataSource.data = res as Voting[]; 
@@ -66,7 +66,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     
     
     this.order = `${event.active} ${event.direction}`;
-    this.getAllCategories();
+    this.getVotings();
   }
 
   public redirectToDetails = (id: string) => {
@@ -86,7 +86,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
       if (result) {
         let deleteUrl: string = `api/votings/${id}`
         this.repoService.delete(deleteUrl).subscribe(res => {
-          this.getAllCategories();
+          this.getVotings();
         }, (error) => {
           this.errorService.dialogConfig = {...this.dialogConfig}
           this.errorService.handleError(error);
