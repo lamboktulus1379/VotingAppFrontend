@@ -8,10 +8,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { VotingCreateComponent } from './voting-create/voting-create.component';
 import { VotingDetailsComponent } from './voting-details/voting-details.component';
+import { VotingUpdateComponent } from './voting-update/voting-update.component';
 
 
 @NgModule({
-  declarations: [VotingListComponent, VotingCreateComponent, VotingDetailsComponent],
+  declarations: [VotingListComponent, VotingCreateComponent, VotingDetailsComponent, VotingUpdateComponent],
   imports: [
     CommonModule,
     VotingRoutingModule,
