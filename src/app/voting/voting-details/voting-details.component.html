@@ -1,0 +1,10 @@
+<div class="app-category-detail">
+  <h3>Name: {{ voting.Name }}</h3>
+  <p>Description: {{ voting.Description }}</p>
+  <p>Date Created: {{ voting.DateCreated | date: "medium" }}</p>
+  <p>Voter's Count: {{ voting.VotersCount }}</p>
+  <p>Due Date: {{ voting.DueDate | date: "medium" }}</p>
+  <!-- <p>
+    Categories: <strong>{{ voting.Categories.Name }}</strong>
+  </p> -->
+</div>

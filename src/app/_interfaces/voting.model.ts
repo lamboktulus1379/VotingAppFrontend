@@ -7,5 +7,5 @@ export interface Voting {
     DateCreated: Date,
     VotersCount: number,
     DueDate: Date,
-    Categories?: Category
+    Categories: Category
 }

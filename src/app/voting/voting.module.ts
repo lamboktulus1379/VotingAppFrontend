@@ -7,10 +7,11 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { VotingCreateComponent } from './voting-create/voting-create.component';
+import { VotingDetailsComponent } from './voting-details/voting-details.component';
 
 
 @NgModule({
-  declarations: [VotingListComponent, VotingCreateComponent],
+  declarations: [VotingListComponent, VotingCreateComponent, VotingDetailsComponent],
   imports: [
     CommonModule,
     VotingRoutingModule,
