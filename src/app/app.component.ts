@@ -1,5 +1,6 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
+import {MatSidenavContainer,MatSidenavContent} from "@angular/material/sidenav"
 import {
   faHome,
   faThLarge,
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   faUserAlt = faUserAlt;
 
-  public title: string = "ecommerce-angular"
+  public title: string = "Voting App"
 
   constructor(private tokenStorageService: TokenStorageService) {}
 

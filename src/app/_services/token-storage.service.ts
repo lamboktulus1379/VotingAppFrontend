@@ -29,7 +29,7 @@ export class TokenStorageService {
     }
   }
 
-  public saveUser(user): void {
+  public saveUser(user : any): void {
     if (isPlatformBrowser(this.platformId)) {
       window.localStorage.removeItem(USER_KEY);
       window.localStorage.setItem(USER_KEY, JSON.stringify(user));

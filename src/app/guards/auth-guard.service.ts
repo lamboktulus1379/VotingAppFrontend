@@ -26,7 +26,7 @@ export class AuthGuardService implements CanActivate {
     if (!isRefreshSuccess) {
       this.router.navigate(["login"]);
     }
-    return false;
+    this.router.navigate(["login"]);
   }
   private async tryRefreshingTokens(token: string) {
     const refreshToken = localStorage.getItem("refreshToken");

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {} from "Jwt"
  
 @Component({
   selector: 'app-home',
@@ -11,5 +10,8 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+  public executeSelectedChange = (event : any) => {
+    console.log(event);
   }
 }

@@ -13,7 +13,16 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutComponent } from './layout/layout.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { HeaderComponent } from './navigation/header/header.component'
+import { MaterialModule } from './material/material.module';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { VotingModule } from './voting/voting.module';
+import { CategoryModule } from './category/category.module';
+import { ServerErrorComponent } from './error-pages/server-error/server-error.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,13 +33,25 @@ import { HttpClientModule } from '@angular/common/http';
     BoardModeratorComponent,
     BoardUserComponent,
     InternalServerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LayoutComponent,
+    HeaderComponent,
+    SidenavListComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule,
+    VotingModule,
+    CategoryModule,
+    RouterModule
+  ],
+  exports: [
   ],
   providers: [],
   bootstrap: [AppComponent]
