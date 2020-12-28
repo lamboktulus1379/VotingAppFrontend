@@ -44,7 +44,7 @@ export class VotingCreateComponent implements OnInit {
   public getAllCategories = () => {
     this.repository.getData(`api/categories`)
     .subscribe(res => {
-      this.categories = res as Category[]; 
+      this.categories = res.body as Category[]; 
       console.log(res);
     }, (error) => {
       this.errorService.handleError(error)

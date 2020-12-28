@@ -8,6 +8,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
 import { Router } from "@angular/router";
 import {ConfirmDialogComponent  } from 'src/app/shared/dialogs/confirm-dialog/confirm-dialog.component';
+import { Category } from 'src/app/_interfaces/category.model';
+import { Page } from 'src/app/_interfaces/page.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-voting-list',
@@ -17,8 +20,17 @@ import {ConfirmDialogComponent  } from 'src/app/shared/dialogs/confirm-dialog/co
 
 
 export class VotingListComponent implements OnInit, AfterViewInit {
-
+  public categories: Category[];
+  public currentVotings:Voting[] = [];
+  public categorySelected =  new Set();
   public order: string;
+  public whereIn: string;
+  public loading: boolean=false;
+  public page: Page;
+  public pageSize: number = 10;
+  public pageIndex: number= 0;
+  public pageNumber: number= 1;
+  public defaultUrl: string= `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}`;
   public displayedColumns = ['name', 'description', 'dateCreated', 'votersCount', 'dueDate', 'categories', 'details', 'update', 'delete']
 
   public dataSource = new MatTableDataSource<Voting>();
@@ -28,7 +40,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
 
   private dialogConfig;
   
-  constructor(private repoService: RepositoryService, private errorService: ErrorHandlerService,  private router: Router, private dialog: MatDialog) {
+  constructor(private repoService: RepositoryService, private http: HttpClient, private errorService: ErrorHandlerService,  private router: Router, private dialog: MatDialog) {
     this.order = "DateCreated desc";
    }
    
@@ -39,6 +51,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getVotings();
+    this.getAllCategories();
 
     this.dialogConfig = {
       height: '200px',
@@ -48,11 +61,32 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   public getVotings = () => {
-    this.repoService.getData(`api/votings?orderBy=${this.order}`)
+    this.loading = true;
+    this.repoService.getData(this.defaultUrl)
     .subscribe(res => {
-      this.dataSource.data = res as Voting[]; 
-      console.log(res);
+      let dt:Voting[] = res.body as Voting[];
+     this.currentVotings.push(...dt);
+     this.dataSource.data = dt;
+      
+      this.page =  JSON.parse(res.headers.get("x-pagination")) as Page;
+      this.pageIndex = parseInt(this.page.CurrentPage) -1;
+
+      console.log(this.page);
+      this.loading = false;      
+    }, (error) => {
+      this.errorService.handleError(error)
+    })
+
+    // this.http.get<any>(`https://localhost:5000/${this.defaultUrl}`, {observe: 'response',headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json'})}).subscribe(res => {
+    //   console.log(res.headers);
+    // })
+  }
+  public getAllCategories = () => {
+    this.repoService.getData(`api/categories`)
+    .subscribe(res => {
+      this.categories = res.body as Category[]; 
     }, (error) => {
       this.errorService.handleError(error)
     })
@@ -66,6 +100,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     
     
     this.order = `${event.active} ${event.direction}`;
+    this.defaultUrl = `api/votings?orderBy=${this.order}`
     this.getVotings();
   }
 
@@ -101,5 +136,25 @@ export class VotingListComponent implements OnInit, AfterViewInit {
   }
   public pageChanged = (event: any) => {
     console.log(event);
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.defaultUrl = `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}`;
+    this.getVotings();
+  }
+
+  public getChecked(e:boolean, idx:number) {    
+   let id =  this.categories[idx].Id
+    if (this.categorySelected.has(id)) {
+      this.categorySelected.delete(id);
+    } else {
+      this.categorySelected.add(id);
+    }
+    if (this.categorySelected.size > 0) {
+      this.whereIn = Array.from(this.categorySelected).join(",").trim();
+      this.defaultUrl = `api/votings?orderBy=${this.order}&whereIn=${this.whereIn}`
+    } else {
+      this.defaultUrl = `api/votings?orderBy=${this.order}`
+    }
+    this.getVotings();
   }
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { EnvironmentUrlService } from './environment-url.service';
+import { Category } from 'src/app/_interfaces/category.model';
+import { Page } from 'src/app/_interfaces/page.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,9 +16,8 @@ export class RepositoryService {
   ) {}
 
   public getData = (route: string) => {
-    return this.http.get(
-      this.createCompleteRoute(route, this.envUrl.urlAddress),
-      this.generateHeaders()
+    return this.http.get<any>(
+      this.createCompleteRoute(route, this.envUrl.urlAddress), {observe: 'response',  ...this.generateHeaders()},     
     );
   };
 
@@ -48,8 +49,7 @@ export class RepositoryService {
 
   private generateHeaders = () => {
     return {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json', 
-    }),
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json'}),
     };
   };
 }

@@ -51,7 +51,7 @@ export class VotingUpdateComponent implements OnInit {
  
     this.repository.getData(apiUrl)
     .subscribe(res => {
-      this.voting = res as Voting;
+      this.voting = res.body as Voting;
 
       this.votingForm.patchValue(this.voting);
     },
@@ -63,7 +63,7 @@ export class VotingUpdateComponent implements OnInit {
   public getAllCategories = () => {
     this.repository.getData(`api/categories`)
     .subscribe(res => {
-      this.categories = res as Category[]; 
+      this.categories = res.body as Category[]; 
       console.log(res);
     }, (error) => {
       this.errorService.handleError(error)

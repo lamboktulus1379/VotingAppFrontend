@@ -63,7 +63,7 @@ export class CategoryUpdateComponent implements OnInit {
 
     this.repository.getData(categoryByIdUrl)
     .subscribe(res => {
-      this.category = res as Category;
+      this.category = res.body as Category;
       console.log(this.category);
       this.categoryForm.patchValue(this.category);
     })

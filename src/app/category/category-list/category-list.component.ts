@@ -51,7 +51,7 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   public getAllCategories = () => {
     this.repoService.getData(`api/categories?orderBy=${this.order}`)
     .subscribe(res => {
-      this.dataSource.data = res as Category[]; 
+      this.dataSource.data = res.body as Category[]; 
       console.log(res);
     }, (error) => {
       this.errorService.handleError(error)

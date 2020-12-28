@@ -24,7 +24,7 @@ export class VotingDetailsComponent implements OnInit {
  
     this.repository.getData(apiUrl)
     .subscribe(res => {
-      this.voting = res as Voting;
+      this.voting = res.body as Voting;
     },
     (error) =>{
       this.errorHandler.handleError(error);

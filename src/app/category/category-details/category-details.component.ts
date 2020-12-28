@@ -21,7 +21,7 @@ export class CategoryDetailsComponent implements OnInit {
  
     this.repository.getData(apiUrl)
     .subscribe(res => {
-      this.category = res as Category;
+      this.category = res.body as Category;
     },
     (error) =>{
       this.errorHandler.handleError(error);
