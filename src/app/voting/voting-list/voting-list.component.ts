@@ -112,10 +112,8 @@ export class VotingListComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
       return;
     }
-    
-    
     this.order = `${event.active} ${event.direction}`;
-    this.defaultUrl = `api/votings?orderBy=${this.order}?name=${this.Name}`
+    this.defaultUrl = `api/votings?orderBy=${this.order}&Name=${this.Name}`
     this.getVotings();
   }
 
