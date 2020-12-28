@@ -16,12 +16,6 @@
   >
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
       <li>
-        <a routerLink="/voting/votings">Voting</a>
-      </li>
-      <li>
-        <a routerLink="/category/categories">Category</a>
-      </li>
-      <li>
         <a mat-button color="danger" (click)="logout()">Logout</a>
       </li>
     </ul>
@@ -34,6 +28,9 @@
     *ngIf="!isUserAuthenticated()"
   >
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+      <li>
+        <a mat-button color="danger" routerLink="/register">Register</a>
+      </li>
       <li>
         <a mat-button color="danger" routerLink="/login">Login</a>
       </li>

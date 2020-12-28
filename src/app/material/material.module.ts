@@ -20,6 +20,7 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSelectModule} from "@angular/material/select"
+import { MatRadioModule } from "@angular/material/radio";
 
 @NgModule({
   declarations: [],
@@ -44,7 +45,8 @@ import { MatSelectModule} from "@angular/material/select"
     MatNativeDateModule,
     MatCardModule,
     MatDialogModule,
-    MatSelectModule    
+    MatSelectModule,
+    MatRadioModule    
   ],
   exports: [
     MatTabsModule,
@@ -65,8 +67,8 @@ import { MatSelectModule} from "@angular/material/select"
     MatNativeDateModule,
     MatCardModule,
     MatDialogModule,
-    MatSelectModule
-    
+    MatSelectModule,
+    MatRadioModule    
   ]
 })
 export class MaterialModule { }

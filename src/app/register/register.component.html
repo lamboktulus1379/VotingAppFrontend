@@ -1,1 +1,113 @@
-<p>register works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+    <mat-card-title>Register</mat-card-title>
+    <form
+      [formGroup]="registerForm"
+      autocomplete="off"
+      novalidate
+      (ngSubmit)="registerUser(registerForm.value)"
+      fxLayoutAlign="center center"
+      fxLayout="colum wrap"
+    >
+      <mat-card-content>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="First Name"
+            formControlName="FirstName"
+            id="first-name"
+          />
+          <mat-error *ngIf="hasError('FirstName', 'required')"
+            >FirstName is required</mat-error
+          >
+          <mat-error *ngIf="hasError('FirstName', 'minlength')"
+            >Must be a valid name, at least 2 characters</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Last Name"
+            formControlName="LastName"
+            id="last-name"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Email"
+            formControlName="Email"
+            id="email"
+          />
+          <mat-error *ngIf="hasError('Email', 'required')"
+            >Email is required</mat-error
+          >
+          <mat-error *ngIf="hasError('Email', 'maxlength')"
+            >You have more than 60 characters</mat-error
+          >
+          <mat-error *ngIf="hasError('Email', 'email')"
+            >Must be a valid email address. ex: user@domain.com</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            type="password"
+            placeholder="Password"
+            formControlName="Password"
+            id="password"
+          />
+          <mat-error *ngIf="hasError('Password', 'required')"
+            >Password is required</mat-error
+          >
+          <mat-error *ngIf="hasError('Password', 'pattern')"
+            >Password must be a combination of upper case, lower case,
+            number</mat-error
+          >
+          <mat-error *ngIf="hasError('Password', 'minlength')"
+            >Password must be at least 8 characters long</mat-error
+          >
+        </mat-form-field>
+        <div style="margin: 8px 0">
+          <label>Gender<br /></label>
+          <mat-radio-group
+            aria-label="Gender"
+            fxLayoutGap="8px"
+            matInput
+            formControlName="Gender"
+          >
+            <mat-radio-button value="M">Male</mat-radio-button>
+            <mat-radio-button value="F">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-form-field>
+          <input
+            matInput
+            type="number"
+            placeholder="Age"
+            formControlName="Age"
+            id="name"
+          />
+          <mat-error *ngIf="hasError('Age', 'required')"
+            >Age is required</mat-error
+          >
+          <mat-error *ngIf="hasError('Age', 'min')"
+            >Minimum age 7 years</mat-error
+          >
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!registerForm.valid"
+        >
+          Register
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>
