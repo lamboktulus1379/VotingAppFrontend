@@ -16,14 +16,14 @@ import { Voting } from 'src/app/_interfaces/voting.model';
   styleUrls: ['./voting-update.component.scss']
 })
 export class VotingUpdateComponent implements OnInit {
-  private dialogConfig;
+  private dialogConfig: any;
 
-  public categories:  Category[];
-  public voting: Voting;
+  public categories:  Category[] = [];
+  public voting: Voting = {Id: "", DateCreated: new Date(), DueDate: new Date(), Description: "", Categories: {Id: "", Name: ""}, Name: "", VotersCount: 0};
   public votingId: string = "";
 
   public votingForm: FormGroup;
-  constructor(private location: Location, private repository: RepositoryService, private dialog: MatDialog, private errorService: ErrorHandlerService, private activeRoute: ActivatedRoute) { }
+  constructor(private location: Location, private repository: RepositoryService, private dialog: MatDialog, private errorHandler: ErrorHandlerService, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     let currentDate = new Date();
@@ -66,7 +66,7 @@ export class VotingUpdateComponent implements OnInit {
       this.categories = res.body as Category[]; 
       console.log(res);
     }, (error) => {
-      this.errorService.handleError(error)
+      this.errorHandler.handleError(error)
     })
   }
 
@@ -90,8 +90,8 @@ export class VotingUpdateComponent implements OnInit {
       });
       
     },(error) => {
-      this.errorService.dialogConfig = {...this.dialogConfig}
-      this.errorService.handleError(error);
+      this.errorHandler.dialogConfig = {...this.dialogConfig}
+      this.errorHandler.handleError(error);
     })
   }
 

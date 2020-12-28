@@ -14,6 +14,7 @@ import { ErrorHandlerService } from 'src/app/shared/services/error-handler.servi
 })
 export class CategoryCreateComponent implements OnInit {
   private dialogConfig;
+  public categoryForm: FormGroup;
   
   public executeCategoryCreation(categoryFormValue: any) {
     let category: categoryForCreation = {
@@ -35,7 +36,7 @@ export class CategoryCreateComponent implements OnInit {
     })
   }
 
-  public categoryForm: FormGroup;
+  
   constructor(private location: Location, private repository: RepositoryService, private dialog: MatDialog, private errorService: ErrorHandlerService) { }
 
   ngOnInit(): void {

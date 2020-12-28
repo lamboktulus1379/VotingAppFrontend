@@ -8,8 +8,9 @@ import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import { SuccessDialogComponent } from '../shared/dialogs/success-dialog/success-dialog.component';
 import { userForLogin } from '../_interfaces/userForLogin.model';
 import { MatDialog } from '@angular/material/dialog';
-import { userForLogin } from '../_interfaces/userForLogin.model';
 import { RepositoryService } from '../shared/services/repository.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Route } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-login',
@@ -27,16 +28,17 @@ export class LoginComponent implements OnInit {
   public invalidLogin: boolean = true;
 
   constructor(
-    private tokenStorage: TokenStorageService,
-    private http: HttpClient,
     private router: Router,
-    private environmentUrlService: EnvironmentUrlService,
     private errorService: ErrorHandlerService,
-    private dialog: MatDialog,
-    private repository: RepositoryService
+    private repository: RepositoryService,
+    private jwtHelper: JwtHelperService,
   ) {}
 
   ngOnInit(): void {
+    if (this.isUserAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
+  
     this.loginForm = new FormGroup({
       Email: new FormControl('', [Validators.required, Validators.email]),
       Password: new FormControl('', [Validators.required])
@@ -45,34 +47,29 @@ export class LoginComponent implements OnInit {
       height: '200px',
       width: '400px',
       disableClose: true,
-      data: {}
+      data: {
+        
+      }
     }
+
+   
   }
   public loginForm: FormGroup;
 
   public hasError = (controlName: string, errorName: string)=> {
     return this.loginForm.controls[controlName].hasError(errorName);
   }
-
-  login(form: NgForm) {
-    const credentials = JSON.stringify(form.value);
-    let apiAddress = `/api/auth/login`;
-    this.http.post(`${this.environmentUrlService.urlAddress}${apiAddress}`, credentials, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json"
-      })
-    }).subscribe(response => {
-      const token = (<any>response).token;
-      const refreshToken = (<any>response).refreshToken;
-      localStorage.setItem("jwt", token);
-      localStorage.setItem("refreshToken", refreshToken);
-
-      this.invalidLogin = false;
-      this.router.navigate(["/"]);
-    }, () => {
-      this.invalidLogin = true;
-    });
+  isUserAuthenticated() {
+    let token: string = "";
+    token = localStorage.getItem("jwt") || "";
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
+
   public executeLoginUser(loginFormValue: any) {
     let user: userForLogin = {
       Email: loginFormValue.Email,
@@ -92,6 +89,8 @@ export class LoginComponent implements OnInit {
       console.log("Success Login");
       
     },(error) => {
+      console.log("Error: ", error);
+     
       this.errorService.dialogConfig = {...this.dialogConfig}
       this.errorService.handleError(error);
     })

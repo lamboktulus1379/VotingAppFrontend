@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -9,7 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor(private jwtHelper: JwtHelperService) { }
+  constructor(private jwtHelper: JwtHelperService, private route: Router) { }
 
   ngOnInit(): void {
   }
@@ -17,7 +18,10 @@ export class HeaderComponent implements OnInit {
     this.sidenavToggle.emit(); 
   }
   logout() {
-    
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("refreshToken");
+
+    this.route.navigate(['/login']);
   }
 
   login() {
