@@ -1,35 +1,48 @@
-<form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-  <div class="container-fluid">
-    <h2 class="form-signin-heading">Login</h2>
-    <div *ngIf="invalidLogin" class="alert alert-danger">
-      Invalid email or password.
-    </div>
-    <br />
-    <label for="email" class="sr-only">Email address</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      ngModel
-      class="form-control"
-      placeholder="Email"
-      required
-      autofocus
-    />
-    <br />
-    <label for="password" class="sr-only">Password</label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      ngModel
-      class="form-control"
-      placeholder="Password"
-      required
-    />
-    <br />
-    <button class="btn btn-lg btn-primary btn-block" type="submit">
-      Sign in
-    </button>
-  </div>
-</form>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+    <mat-card-title>Login</mat-card-title>
+    <form
+      [formGroup]="loginForm"
+      autocomplete="off"
+      novalidate
+      (ngSubmit)="loginUser(loginForm.value)"
+      fxLayoutAlign="center center"
+      fxLayout="colum wrap"
+    >
+      <mat-card-content>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Email"
+            formControlName="Email"
+            id="name"
+          />
+          <mat-error *ngIf="hasError('Email', 'required')"
+            >Email is required</mat-error
+          >
+          <mat-error *ngIf="hasError('Email', 'maxlength')"
+            >You have more than 60 characters</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Password"
+            formControlName="Password"
+            id="name"
+          />
+          <mat-error *ngIf="hasError('Password', 'required')"
+            >Password is required</mat-error
+          >
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" [disabled]="!loginForm.valid">
+          Login
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>

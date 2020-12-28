@@ -74,7 +74,6 @@ export class VotingListComponent implements OnInit, AfterViewInit {
       this.page =  JSON.parse(res.headers.get("x-pagination")) as Page;
       this.pageIndex = parseInt(this.page.CurrentPage) -1;
 
-      console.log(this.page);
       this.loading = false;      
     }, (error) => {
       this.errorService.handleError(error)
@@ -151,7 +150,6 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
   public pageChanged = (event: any) => {
-    console.log(event);
     this.pageNumber = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.defaultUrl = `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}&Name=${this.Name}`;

@@ -7,7 +7,13 @@
   <div>
     <a routerLink="/home">Home</a>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+  <div
+    fxFlex
+    fxLayout
+    fxLayoutAlign="end"
+    fxHide.xs
+    *ngIf="isUserAuthenticated()"
+  >
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
       <li>
         <a routerLink="/voting/votings">Voting</a>
@@ -17,6 +23,19 @@
       </li>
       <li>
         <a mat-button color="danger" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+  <div
+    fxFlex
+    fxLayout
+    fxLayoutAlign="end"
+    fxHide.xs
+    *ngIf="!isUserAuthenticated()"
+  >
+    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+      <li>
+        <a mat-button color="danger" (click)="login()">Login</a>
       </li>
     </ul>
   </div>

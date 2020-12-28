@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,11 @@ import { VotingModule } from './voting/voting.module';
 import { CategoryModule } from './category/category.module';
 import { ServerErrorComponent } from './error-pages/server-error/server-error.component';
 import { RouterModule } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +54,15 @@ import { RouterModule } from '@angular/router';
     FlexLayoutModule,
     VotingModule,
     CategoryModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:5000"],
+        disallowedRoutes: []
+      }
+    })
   ],
   exports: [
   ],

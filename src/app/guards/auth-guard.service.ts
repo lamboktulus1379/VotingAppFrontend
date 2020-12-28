@@ -6,12 +6,7 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
-@NgModule({
-  providers: [JwtModule],
-  imports: [
-    JwtModule
-  ]
-})
+
 export class AuthGuardService implements CanActivate {
   private jwtHelper: JwtHelperService = new JwtHelperService();
   constructor( private router: Router, private http: HttpClient) { }
@@ -26,7 +21,7 @@ export class AuthGuardService implements CanActivate {
     if (!isRefreshSuccess) {
       this.router.navigate(["login"]);
     }
-    this.router.navigate(["login"]);
+    return false;
   }
   private async tryRefreshingTokens(token: string) {
     const refreshToken = localStorage.getItem("refreshToken");
