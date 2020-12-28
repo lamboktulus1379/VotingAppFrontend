@@ -4,24 +4,44 @@
   </div>
   <p>In this application we are going to vote.</p>
 
-  <mat-tab-group (selectedIndexChange)="executeSelectedChange($event)">
-    <mat-tab label="Material Components">
-      <p>
-        We are going to use different material components to create nice looking
-        angular app.
-      </p>
-    </mat-tab>
-    <mat-tab label="Consume .NET Core Web API">
-      <p>
-        We will consume our .NET Core application. Basically, we will create
-        complete CRUD client app.
-      </p>
-    </mat-tab>
-    <mat-tab label="Fully responsive navigation menu">
-      <p>
-        By using material components, we are going to create fully responsive
-        navigation menu, with its side-bar as well.
-      </p>
-    </mat-tab>
-  </mat-tab-group>
+  <mat-grid-list cols="4" rowHeight="2:1">
+    <mat-grid-tile
+      fxLayout="row"
+      *ngFor="let voting of currentVotings; let idx = index"
+    >
+      <button
+        mat-raised-button
+        color="primary"
+        [matBadge]="voting.VotersCount"
+        matBadgePosition="before"
+        matBadgeColor="accent"
+        [disabled]="dateNow > voting.DueDate ? true : false"
+      >
+        {{ voting.Name }}
+      </button>
+      <button
+        mat-icon-button
+        aria-label="Example icon-button with a heart icon"
+        (click)="userVote(idx)"
+        [disabled]="dateNow > voting.DueDate ? true : false"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        aria-label="Example icon-button with a reorder icon"
+        (click)="redirectToDetail(voting.Id)"
+      >
+        <mat-icon>reorder</mat-icon>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div
+    fxLayout
+    fxLayoutAlign="center center"
+    *ngIf="currentVotings.length < page.TotalCount"
+  >
+    <button mat-raised-button (click)="loadMore()">Load More</button>
+  </div>
 </section>

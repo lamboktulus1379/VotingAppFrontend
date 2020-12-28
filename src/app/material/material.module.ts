@@ -21,6 +21,8 @@ import { MatCardModule } from "@angular/material/card";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSelectModule} from "@angular/material/select"
 import { MatRadioModule } from "@angular/material/radio";
+import {MatGridListModule} from "@angular/material/grid-list"
+import { MatBadgeModule } from "@angular/material/badge";
 
 @NgModule({
   declarations: [],
@@ -46,7 +48,9 @@ import { MatRadioModule } from "@angular/material/radio";
     MatCardModule,
     MatDialogModule,
     MatSelectModule,
-    MatRadioModule    
+    MatRadioModule,
+    MatGridListModule,
+    MatBadgeModule    
   ],
   exports: [
     MatTabsModule,
@@ -68,7 +72,9 @@ import { MatRadioModule } from "@angular/material/radio";
     MatCardModule,
     MatDialogModule,
     MatSelectModule,
-    MatRadioModule    
+    MatRadioModule,
+    MatGridListModule,
+    MatBadgeModule    
   ]
 })
 export class MaterialModule { }

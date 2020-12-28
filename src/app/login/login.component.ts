@@ -81,8 +81,10 @@ export class LoginComponent implements OnInit {
     this.repository.create(apiUrl, user).subscribe(res => {
       const token = (<any>res).token;
       const refreshToken = (<any>res).refreshToken;
+      const id = (<any>res).id;
       localStorage.setItem("jwt", token);
       localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem('id', id);
 
       this.invalidLogin = false;
       this.router.navigate(["/"]);
