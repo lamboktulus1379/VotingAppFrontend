@@ -24,13 +24,14 @@ export class VotingListComponent implements OnInit, AfterViewInit {
   public currentVotings:Voting[] = [];
   public categorySelected =  new Set();
   public order: string;
-  public whereIn: string;
+  public whereIn: string = "";
+  public Name: string = "";
   public loading: boolean=false;
-  public page: Page;
+  public page: Page = {};
   public pageSize: number = 10;
   public pageIndex: number= 0;
   public pageNumber: number= 1;
-  public defaultUrl: string= `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}`;
+  public defaultUrl: string= `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}&Name=${this.Name}`;
   public displayedColumns = ['name', 'description', 'dateCreated', 'votersCount', 'dueDate', 'categories', 'details', 'update', 'delete']
 
   public dataSource = new MatTableDataSource<Voting>();
@@ -92,6 +93,21 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     })
   }
 
+  public doSearch(e:any) {
+    if ( e.target.value.length > 2) {
+      this.Name = e.target.value;
+    } else {
+      this.Name = "";
+    }
+    
+    this.search(this.Name);
+  }
+
+  public search(by :string) {
+    this.defaultUrl = `api/votings?pageSize=${this.pageSize}&name=${by}`;
+    this.getVotings();
+  }
+
   customeSort = (event : any) => {
     if (event.active == "categories") {
       this.dataSource.sort = this.sort;
@@ -100,7 +116,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     
     
     this.order = `${event.active} ${event.direction}`;
-    this.defaultUrl = `api/votings?orderBy=${this.order}`
+    this.defaultUrl = `api/votings?orderBy=${this.order}?name=${this.Name}`
     this.getVotings();
   }
 
@@ -138,7 +154,7 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     console.log(event);
     this.pageNumber = event.pageIndex + 1;
     this.pageSize = event.pageSize;
-    this.defaultUrl = `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}`;
+    this.defaultUrl = `api/votings?pageSize=${this.pageSize}&pageNumber=${this.pageNumber}&Name=${this.Name}`;
     this.getVotings();
   }
 
@@ -151,9 +167,9 @@ export class VotingListComponent implements OnInit, AfterViewInit {
     }
     if (this.categorySelected.size > 0) {
       this.whereIn = Array.from(this.categorySelected).join(",").trim();
-      this.defaultUrl = `api/votings?orderBy=${this.order}&whereIn=${this.whereIn}`
+      this.defaultUrl = `api/votings?orderBy=${this.order}&whereIn=${this.whereIn}&Name=${this.Name}`
     } else {
-      this.defaultUrl = `api/votings?orderBy=${this.order}`
+      this.defaultUrl = `api/votings?orderBy=${this.order}&Name=${this.Name}`
     }
     this.getVotings();
   }
